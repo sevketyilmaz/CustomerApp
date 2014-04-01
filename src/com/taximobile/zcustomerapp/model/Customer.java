@@ -1,14 +1,16 @@
 package com.taximobile.zcustomerapp.model;
 
+import java.sql.Timestamp;
+
 public class Customer {    
     private int _customerId;
     private String _customerName;
     private String _email;
-    private String _cellPhone;
-    private String _picture;
+    private String _gsm;
     private double _lat;
     private double _lng;
     private String _password;
+    private Timestamp _lastUpdate;
     
     //constructor
     public Customer(){}
@@ -19,15 +21,15 @@ public class Customer {
     	setPassword(password);
     }
     public Customer(int customerId, String customerName, 
-    				String email, String cellPhone, String picture,
-    				double lat, double lng, String password)
+    				String email, String gsm, double lat,
+    				double lng, String password, String lastUpdate)
     {
     	this(customerId, customerName, password);
     	setEmail(email);
-    	setCellPhone(cellPhone);
-    	setPicture(picture);
+    	setCellPhone(gsm);
     	setLat(lat);
     	setLng(lng);
+    	setLastUpdate(lastUpdate);
     }
 
 	public int getCustomerId() {
@@ -55,19 +57,11 @@ public class Customer {
 	}
 
 	public String getCellPhone() {
-		return _cellPhone;
+		return _gsm;
 	}
 
-	public void setCellPhone(String cellPhone) {
-		this._cellPhone = cellPhone;
-	}
-
-	public String getPicture() {
-		return _picture;
-	}
-
-	public void setPicture(String picture) {
-		this._picture = picture;
+	public void setCellPhone(String gsm) {
+		this._gsm = gsm;
 	}
 
 	public double getLat() {
@@ -94,5 +88,12 @@ public class Customer {
 		this._password = password;
 	}
     
+    public Timestamp getLastUpdate(){
+    	return _lastUpdate;
+    }
     
+    public void setLastUpdate(String lastUpdate){
+    	String s = lastUpdate.replace('T', ' ');
+    	_lastUpdate = Timestamp.valueOf(s);
+    }
 }

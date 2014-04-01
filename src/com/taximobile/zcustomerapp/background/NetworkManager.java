@@ -1,6 +1,7 @@
 package com.taximobile.zcustomerapp.background;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -15,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.text.method.DateTimeKeyListener;
 import android.util.Log;
 import com.taximobile.zcustomerapp.MainActivity;
 import com.taximobile.zcustomerapp.model.*;
@@ -70,16 +72,16 @@ public class NetworkManager {
 			Customer customer = null;
 			JSONObject customerJO = new JSONObject(content);
 			
-			int customerId =Integer.parseInt(customerJO.getString("CustomerID"));
+			int customerId =Integer.parseInt(customerJO.getString("CustomerId"));
 			String customerName = customerJO.getString("CustomerName");
 			String email = customerJO.getString("Email");
-			String cellPhone = customerJO.getString("CellPhone");
-			String picture = customerJO.getString("Picture");
-			double lat = customerJO.getDouble("CustomerLat");
-			double lng = customerJO.getDouble("CustomerLon");
+			String gsm= customerJO.getString("GSM");
+			double lat = customerJO.getDouble("Lat");
+			double lng = customerJO.getDouble("Lng");
 			String password = customerJO.getString("Password");
+			String lastUpdate = customerJO.getString("LastUpdate");
 
-			customer = new Customer(customerId, customerName, email, cellPhone, picture, lat, lng, password);
+			customer = new Customer(customerId, customerName, email, gsm, lat, lng, password, lastUpdate);
 			Log.d(TAG, "parsed customer object"+ customer.toString());
 			return customer;
 		} catch (Exception e) {

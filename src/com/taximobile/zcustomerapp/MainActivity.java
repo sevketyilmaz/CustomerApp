@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import com.taximobile.zcustomerapp.fragments.LoginFragment;
 
 public class MainActivity extends Activity {
-	public static final String TM_BASE_URL = "http://teammemberone-001-site1.myasp.net/";
-	public static final String TM_LOGON_CUSTOMER = TM_BASE_URL + "api/ApiLoginCustomer"; //post:(LoginModel)
+	public static final String TM_BASE_URL = "http://svktylmz-001-site1.myasp.net/";
+	public static final String TM_LOGON_CUSTOMER = TM_BASE_URL + "api/Logon/customer"; //post:(LoginModel)
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

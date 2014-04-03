@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment implements LogOnAsyncTask.ILogOnRead
 		if(_customer !=null){
 			fm = getFragmentManager();
 			fm.beginTransaction()
-				.replace(R.id.fragmentContainer, new MapFragment())
+				.replace(R.id.fragmentContainer, new MyMapFragment())
 				.commit();
 		}else{
 			userNameEditText.setText("");

@@ -15,6 +15,7 @@ import com.taximobile.zcustomerapp.R;
 import com.taximobile.zcustomerapp.background.LogOnAsyncTask;
 import com.taximobile.zcustomerapp.model.Customer;
 import com.taximobile.zcustomerapp.model.LoginModel;
+import com.taximobile.zcustomerapp.model.ModelManager;
 
 public class LoginFragment extends Fragment implements LogOnAsyncTask.ILogOnReadyListener{
 	private static final String TAG = "LoginFragment";
@@ -28,7 +29,7 @@ public class LoginFragment extends Fragment implements LogOnAsyncTask.ILogOnRead
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		_customer = ModelManager.Get(getActivity()).getCustomer();
 	}
 	
 	@Override

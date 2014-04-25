@@ -79,9 +79,9 @@ public class NetworkManager {
 			double lat = customerJO.getDouble("Lat");
 			double lng = customerJO.getDouble("Lng");
 			String password = customerJO.getString("Password");
-			String lastUpdate = customerJO.getString("LastUpdate");
+			//String lastUpdate = customerJO.getString("LastUpdate");
 
-			customer = new Customer(customerId, customerName, email, gsm, lat, lng, password, lastUpdate);
+			customer = new Customer(customerId, customerName, email, gsm, lat, lng, password);
 			Log.d(TAG, "parsed customer object"+ customer.toString());
 			return customer;
 		} catch (Exception e) {

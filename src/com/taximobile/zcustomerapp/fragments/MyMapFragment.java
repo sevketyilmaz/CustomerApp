@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -21,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.taximobile.zcustomerapp.R;
 import com.taximobile.zcustomerapp.background.PositionManager;
 import com.taximobile.zcustomerapp.background.PositionReceiver;
+import com.taximobile.zcustomerapp.model.ModelManager;
 
 public class MyMapFragment extends Fragment {
 	private static final String TAG = "MyMapFragment";
@@ -28,13 +32,15 @@ public class MyMapFragment extends Fragment {
 	private PositionManager _positionManager;	
 	private GoogleMap googleMap;
 	private LatLng _currentLatLng;
+	private Button getTaxiButton;
 	
 	private BroadcastReceiver _positionReceiver = new PositionReceiver(){
 		@Override
 		protected void onLocationReceived(Context context, Location loc) {
 			if(isVisible() && loc != null){
 				_currentLatLng = new LatLng(loc.getLatitude(), loc.getLongitude());
-				updateUI();				
+				updateUI();
+				getMeTaxi();
 			}
 		};
 		
@@ -59,6 +65,11 @@ public class MyMapFragment extends Fragment {
 		MapFragment MF = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
 		
 		googleMap =MF.getMap();
+		initialMap();//initialize the better zoomed map
+		
+		getTaxiButton = (Button) view.findViewById(R.id.get_taxi_button);
+		getTaxiButton.setEnabled(false);
+		
 		
 		//start location updates
 		//when location received, update _currentLatLng and updateUI()
@@ -80,11 +91,21 @@ public class MyMapFragment extends Fragment {
 		_positionManager.stopLocationUpdates();
 		super.onStop();
 	}
-
+	
+	private void getMeTaxi(){
+		getTaxiButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Toast.makeText(getActivity(), "getme Taxi clicked", Toast.LENGTH_LONG).show();
+			}
+		});
+	}
+	
 	private void updateUI(){
 		addCurrentPositionToMap();
 		centerTheMap();
 		zoomTheMap(16);
+		getTaxiButton.setEnabled(true);
 	}
 	
 	private void addCurrentPositionToMap() {
@@ -104,5 +125,14 @@ public class MyMapFragment extends Fragment {
 		googleMap.moveCamera(zoom);
 	}
 	
+	private void initialMap(){
+		LatLng iLoc = new LatLng(39.09, 35.37);
+		CameraUpdate center = CameraUpdateFactory.newLatLng(iLoc);
+		googleMap.moveCamera(center);
+		
+		CameraUpdate zoom = CameraUpdateFactory.zoomTo(6);
+		googleMap.moveCamera(zoom);
+		
+	}
 	
 }

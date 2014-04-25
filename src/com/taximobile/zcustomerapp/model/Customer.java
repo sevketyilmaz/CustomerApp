@@ -13,9 +13,17 @@ public class Customer {
     private Timestamp _lastUpdate;
     
     //constructor
-    public Customer(){}
-    
+    public Customer(){
+    	setLastUpdate(System.currentTimeMillis());
+    }	
+    public Customer(int customerId, double lat, double lng){
+		this();
+		setCustomerId(customerId);
+		setLat(lat);
+		setLng(lng);
+	}    
     public Customer(int customerId, String customerName, String password){
+    	this();
     	setCustomerId(customerId);
     	setCustomerName(customerName);
     	setPassword(password);
@@ -31,6 +39,16 @@ public class Customer {
     	setLng(lng);
     	setLastUpdate(lastUpdate);
     }
+    public Customer(int customerId, String customerName, 
+			String email, String gsm, double lat,
+			double lng, String password)
+	{
+		this(customerId, customerName, password);
+		setEmail(email);
+		setCellPhone(gsm);
+		setLat(lat);
+		setLng(lng);
+	}
 
 	public int getCustomerId() {
 		return _customerId;
@@ -95,5 +113,9 @@ public class Customer {
     public void setLastUpdate(String lastUpdate){
     	String s = lastUpdate.replace('T', ' ');
     	_lastUpdate = Timestamp.valueOf(s);
+    }
+    
+    public void setLastUpdate(Long lastUpdate){
+    	_lastUpdate = new Timestamp(lastUpdate);
     }
 }

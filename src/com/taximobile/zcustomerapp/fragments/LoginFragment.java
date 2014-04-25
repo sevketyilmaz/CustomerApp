@@ -2,12 +2,14 @@ package com.taximobile.zcustomerapp.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -25,11 +27,14 @@ public class LoginFragment extends Fragment implements LogOnAsyncTask.ILogOnRead
 	private Customer _customer;
 	
 	FragmentManager fm;
+	InputMethodManager inMgr;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		_customer = ModelManager.Get(getActivity()).getCustomer();
+		_customer = ModelManager.Get().getCustomer();
+		
+		inMgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 	}
 	
 	@Override
@@ -58,7 +63,11 @@ public class LoginFragment extends Fragment implements LogOnAsyncTask.ILogOnRead
 	//call back method from LogOnAsyncTask
 	public void LogOnReady(Customer customer){
 		_customer = customer;
-		if(_customer !=null){
+		ModelManager.Get().setCustomer(customer);
+		if(customer !=null){
+			//get the softkeypad disappear
+			inMgr.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+			
 			fm = getFragmentManager();
 			fm.beginTransaction()
 				.replace(R.id.fragmentContainer, new MyMapFragment())
@@ -70,7 +79,7 @@ public class LoginFragment extends Fragment implements LogOnAsyncTask.ILogOnRead
 	}
 	
 	private void checkPassword(Editable uName, Editable pass){
-		//TODO check if username and password correct
+		//TODO check if user name and password correct
 		
 		LoginModel loginModel = new LoginModel(uName.toString(), pass.toString());
 		LogOnAsyncTask task = new LogOnAsyncTask(getActivity(), this);
